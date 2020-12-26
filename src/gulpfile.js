@@ -79,7 +79,6 @@ gulp.task("default", (done) => {
     runSequence(["style", "serve"], done);
 });
 
-///////////////////////////////////////////////////////////
 // Helpers
 function onError(error) {
     console.log(error.toString());
