@@ -1,13 +1,10 @@
 const gulp = require("gulp");
-const runSequence = require("gulp4-run-sequence");
-const watch = require("gulp-watch");
 const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("gulp-autoprefixer");
 const notify = require("gulp-notify");
 const cssnano = require("gulp-cssnano");
 const plumber = require("gulp-plumber");
-const gulpNotify = require("gulp-notify");
 const browserSync = require("browser-sync");
 const imagemin = require("gulp-imagemin");
 const uglify = require("gulp-uglify");
@@ -36,7 +33,7 @@ const paths = {
 };
 
 // SASS
-gulp.task("style", function () {
+function style() {
     return gulp
         .src(paths.src.scssMain)
         .pipe(
@@ -52,10 +49,10 @@ gulp.task("style", function () {
         .pipe(sourcemaps.write())
         .on("error", onError)
         .pipe(gulp.dest(paths.dest.css));
-});
+}
 
 // SASS-prod
-gulp.task("style-build", function () {
+function styleBuild() {
     return gulp
         .src(paths.src.scssMain)
         .pipe(
@@ -70,85 +67,79 @@ gulp.task("style-build", function () {
         .pipe(autoprefixer("last 4 version"))
         .pipe(cssnano())
         .pipe(gulp.dest(paths.dest.css));
-});
+}
 
 // Watcher
-gulp.task("watch", () => {
-    gulp.watch(paths.src.scss, function () {
-        runSequence("style", ["notify"]);
-    });
-});
+// function watchFile() {
+//     return gulp.watch(paths.src.html, );
+// }
 
 // Build for prod
-gulp.task("build", function (callback) {
-    runSequence(["style-build"], callback);
-});
+function build(callback) {
+    styleBuild().pipe(callback);
+}
 
 // Copy CSS
-gulp.task("copy-css", function () {
+function copyCSS() {
     return gulp.src([paths.src.css]).pipe(gulp.dest(paths.dest.css));
-});
+}
 
 // Copy Pages
-gulp.task("copy-pages", function () {
+function copyPages() {
     return gulp
         .src([paths.src.html, paths.src.php])
         .pipe(gulp.dest(paths.dest.dest));
-});
+}
 
 // Copy Fonts
-gulp.task("copy-fonts", function () {
+function copyFonts() {
     return gulp.src([paths.src.fonts]).pipe(gulp.dest(paths.dest.fonts));
-});
+}
 
 // Copy Downloads
-gulp.task("copy-downloads", function () {
+function copyDownloads() {
     return gulp
         .src([paths.src.downloads])
         .pipe(gulp.dest(paths.dest.downloads));
-});
+}
 
 // Minify images
-gulp.task("image", function () {
+function image() {
     return gulp
         .src(paths.src.img)
         .pipe(imagemin())
         .pipe(gulp.dest(paths.dest.img));
-});
+}
 
 // Uglify JS
-gulp.task("uglify", function () {
+function uglifyJS() {
     return gulp.src(paths.src.js).pipe(uglify()).pipe(gulp.dest(paths.dest.js));
-});
+}
 
-gulp.task(
-    "move-assets",
-    gulp.series(
-        "copy-css",
-        "copy-pages",
-        "copy-fonts",
-        "copy-downloads",
-        "image",
-        "uglify"
-    )
+const moveAssets = gulp.parallel(
+    copyCSS,
+    copyPages,
+    copyFonts,
+    copyDownloads,
+    image,
+    uglifyJS
 );
 
 // Serve
-gulp.task(
-    "serve",
-    gulp.series("style", function () {
-        browserSync.init({
-            server: paths.dest.dest,
-        });
-        // watch(paths.src.html).on("change", browserSync.reload);
-    })
-);
+function serve() {
+    return browserSync.init({
+        server: paths.dest.dest,
+    });
+}
 
-gulp.task("default", (done) => {
-    gulp.series("move-assets", "style", "serve");
-    done();
-    // runSequence(["move-assets", "style", "serve"], done);
-});
+function watchHTML() {
+    return gulp.watch("*.html").on("change", browserSync.reload);
+}
+
+const defaultTasks = gulp.series(
+    gulp.parallel(moveAssets, style),
+    gulp.parallel(serve, watchHTML)
+);
 
 // Helpers
 function onError(error) {
@@ -156,6 +147,4 @@ function onError(error) {
     this.emit("end");
 }
 
-gulp.task("notify", function () {
-    return gulp.src("").pipe(notify({ message: "Done!", onLast: true }));
-});
+module.exports = { defaultTasks };
