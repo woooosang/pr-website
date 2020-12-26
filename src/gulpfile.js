@@ -66,7 +66,7 @@ function styleBuild() {
         .on("error", onError)
         .pipe(autoprefixer("last 4 version"))
         .pipe(cssnano())
-        .pipe(gulp.dest(paths.dest.css));
+        .pipe(gulp.dest("./assets/css"));
 }
 
 // Watcher
@@ -75,9 +75,9 @@ function styleBuild() {
 // }
 
 // Build for prod
-function build(callback) {
-    styleBuild().pipe(callback);
-}
+// function build(callback) {
+//     styleBuild().pipe(callback);
+// }
 
 // Copy CSS
 function copyCSS() {
@@ -132,14 +132,22 @@ function serve() {
     });
 }
 
+function serveDev() {
+    return browserSync.init({
+        server: "./",
+    });
+}
+
 function watchHTML() {
     return gulp.watch("*.html").on("change", browserSync.reload);
 }
 
-const defaultTasks = gulp.series(
-    gulp.parallel(moveAssets, style),
-    gulp.parallel(serve, watchHTML)
+const defaultTasksDev = gulp.series(
+    styleBuild,
+    gulp.parallel(serveDev, watchHTML)
 );
+
+const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), serve);
 
 // Helpers
 function onError(error) {
@@ -147,4 +155,5 @@ function onError(error) {
     this.emit("end");
 }
 
-module.exports = { defaultTasks };
+exports.dev = defaultTasksDev;
+exports.default = defaultTasks;
