@@ -9,15 +9,36 @@ const cssnano = require("gulp-cssnano");
 const plumber = require("gulp-plumber");
 const gulpNotify = require("gulp-notify");
 const browserSync = require("browser-sync");
+const imagemin = require("gulp-imagemin");
+const uglify = require("gulp-uglify");
 
-const scssFiles = ["./assets/scss/**/*.scss"];
-const scssMain = ["./assets/scss/main.scss"];
-const pathStyleDest = "./assets/css";
+const paths = {
+    src: {
+        assets: "./assets",
+        css: "./assets/css/*.css",
+        downloads: "./assets/downloads/*",
+        fonts: "./assets/fonts/*",
+        img: "./assets/img/*",
+        js: "./assets/js/*.js",
+        html: "./*.html",
+        php: "./*.php",
+        scss: "./assets/scss/**/*.scss",
+        scssMain: "./assets/scss/main.scss",
+    },
+    dest: {
+        dest: "../dist",
+        css: "../dist/assets/css",
+        downloads: "../dist/assets/downloads",
+        fonts: "../dist/assets/fonts",
+        img: "../dist/assets/img",
+        js: "../dist/assets/js",
+    },
+};
 
 // SASS
 gulp.task("style", function () {
     return gulp
-        .src(scssMain)
+        .src(paths.src.scssMain)
         .pipe(
             plumber({
                 errorHandler: notify.onError(
@@ -30,12 +51,13 @@ gulp.task("style", function () {
         .pipe(autoprefixer("last 4 version"))
         .pipe(sourcemaps.write())
         .on("error", onError)
-        .pipe(gulp.dest(pathStyleDest));
+        .pipe(gulp.dest(paths.dest.css));
 });
 
+// SASS-prod
 gulp.task("style-build", function () {
     return gulp
-        .src(scssMain)
+        .src(paths.src.scssMain)
         .pipe(
             plumber({
                 errorHandler: notify.onError(
@@ -47,12 +69,12 @@ gulp.task("style-build", function () {
         .on("error", onError)
         .pipe(autoprefixer("last 4 version"))
         .pipe(cssnano())
-        .pipe(gulp.dest(pathStyleDest));
+        .pipe(gulp.dest(paths.dest.css));
 });
 
 // Watcher
 gulp.task("watch", () => {
-    gulp.watch(scssFiles, function () {
+    gulp.watch(paths.src.scss, function () {
         runSequence("style", ["notify"]);
     });
 });
@@ -62,21 +84,70 @@ gulp.task("build", function (callback) {
     runSequence(["style-build"], callback);
 });
 
+// Copy CSS
+gulp.task("copy-css", function () {
+    return gulp.src([paths.src.css]).pipe(gulp.dest(paths.dest.css));
+});
+
+// Copy Pages
+gulp.task("copy-pages", function () {
+    return gulp
+        .src([paths.src.html, paths.src.php])
+        .pipe(gulp.dest(paths.dest.dest));
+});
+
+// Copy Fonts
+gulp.task("copy-fonts", function () {
+    return gulp.src([paths.src.fonts]).pipe(gulp.dest(paths.dest.fonts));
+});
+
+// Copy Downloads
+gulp.task("copy-downloads", function () {
+    return gulp
+        .src([paths.src.downloads])
+        .pipe(gulp.dest(paths.dest.downloads));
+});
+
+// Minify images
+gulp.task("image", function () {
+    return gulp
+        .src(paths.src.img)
+        .pipe(imagemin())
+        .pipe(gulp.dest(paths.dest.img));
+});
+
+// Uglify JS
+gulp.task("uglify", function () {
+    return gulp.src(paths.src.js).pipe(uglify()).pipe(gulp.dest(paths.dest.js));
+});
+
+gulp.task(
+    "move-assets",
+    gulp.series(
+        "copy-css",
+        "copy-pages",
+        "copy-fonts",
+        "copy-downloads",
+        "image",
+        "uglify"
+    )
+);
+
+// Serve
 gulp.task(
     "serve",
     gulp.series("style", function () {
         browserSync.init({
-            server: "./",
+            server: paths.dest.dest,
         });
-
-        gulp.watch(scssMain, gulp.series("watch"));
-        gulp.watch("./*.html").on("change", browserSync.reload);
+        // watch(paths.src.html).on("change", browserSync.reload);
     })
 );
 
-// Default
 gulp.task("default", (done) => {
-    runSequence(["style", "serve"], done);
+    gulp.series("move-assets", "style", "serve");
+    done();
+    // runSequence(["move-assets", "style", "serve"], done);
 });
 
 // Helpers
