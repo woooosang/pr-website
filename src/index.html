@@ -69,13 +69,10 @@
 <!-- Mobile menu -->
 
 <!--Header-->
-  <header class="main-header" style="background-image: url(assets/img/img_bg_header.jpg)">
+  <header class="main-header" style="background-image: url(assets/img/img_bg_header.png)">
     <div class="container">
       <div class="row personal-profile">
-        <div class="col-md-4 personal-profile__avatar">
-          <img class="" src="http://via.placeholder.com/350x400" alt="avatar">
-        </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
           <p class="personal-profile__name">Woosang Kang_</p>
           <p class="personal-profile__work">CS @ Cornell '23, SWE & backend developer</p>
           <div class="personal-profile__contacts">
@@ -94,23 +91,28 @@
             <a href="https://www.facebook.com/dntkd97" target="_blank"><i class="fa fa-facebook-square"></i></a>
           </p>
         </div>
+        <div class="col-md-4 mt-4">
+          <iframe width="400" height="290" src="https://www.youtube.com/embed/qyQLNk6QoJk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </header>
 <!--Header-->
 
-<!--Hello-->
-  <section id="hello" class="container section">
+<!--Resume-->
+  <section id="resume" class="container section">
     <div class="row">
       <div class="col-md-10">
-        <h2 id="hello_header" class="section__title">Hi_</h2>
+        <h2 id="resume_header" class="section__title">Hi_</h2>
         <p class="section__description">
-          I am a Junior Web developer able to build a Web presence from the ground up - from concept, navigation,
-          layout and programming to UX and SEO. Skilled at writing well-designed, testable and efficient code using
-          current best practices in Web development. Fast learner, hard worker and team player who is proficient in
-          an array of scripting languages and multimedia Web tools!
+          Hi there! I'm <b>Woosang Kang</b>, a CS sophomore at Cornell and an 
+          aspiring software engineer. <br>
+          My primary interests are developing a resilient and scalable backend
+          system and producing quality music! 
         </p>
-        <a href="assets/downloads/WoosangKang_MidSummer_Resume_ver8.pdf" 
+      </div>
+      <div class="col-md-10">
+        <a href="assets/downloads/WoosangKang_Winter_Resume.pdf" 
            download="WoosangKang_Resume.pdf" 
            class="section_btn site-btn">
            <img src="assets/img/img_btn_icon.png" alt="">
@@ -118,22 +120,35 @@
         </a>
       </div>
     </div>
-  </section>
-<!--Hello-->
-
-  <hr>
-
-<!--Resume-->
-  <section id="resume" class="container section">
     <div class="row">
-      <div class="col-md-10">
-        <h2 id="resume_header" class="section__title">Resume_</h2>
-        <p class="section__description">
-          Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i> eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence of
-          humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute irure dolor in
-          upper-intermediate english level velit  dolore eu ivivdtevoluptatem ontend developer.
-        </p>
+      <div class="col-md-8 section__resume resume-list">
+        <h3 class="resume-list_title">employment / experiences</h3>
+        <div class="resume-list__block">
+          <p class="resume-list__block-title">Backend Developer / Cornell Design & Tech Initiative</p>
+          <p class="resume-list__block-date">SEP 2020 - Present</p>
+          <ul>
+            <li>• Implemented the backend API for a club application management system</li>
+            <li>• Performed unit tests to validate sorting features and average response time</li>
+            <li>• Provided online documentations on API endpoints and function specifications</li>
+          </ul>
+        </div>
+        <div class="resume-list__block">
+          <p class="resume-list__block-title">Freelance Web Developer / Travel dNation</p>
+          <p class="resume-list__block-date">JAN 2020 - APR 2020</p>
+          <ul>
+            <li>• Built a web app MVP for a tourism service with geospatial querying with GMap API</li>
+            <li>• Reduced average payload size up to 30% and response time by implementing pagination through query cursors</li>
+          </ul>
+        </div>
+        <div class="resume-list__block">
+          <p class="resume-list__block-title">mp sergeant / Korean augmentation to the u.s. army (KATUSA)</p>
+          <p class="resume-list__block-date">2018 - 2005</p>
+          <ul>
+            <li>• Performed Korean-English translation and military law enforcement</li>
+            <li>• Completed service as a sergeant & leader of a section of 20+ members, received specialized joint training in multiple
+              fields (UCMJ, Taser certification, self-defense, etc.)</li>
+          </ul>          
+        </div>
       </div>
     </div>
     <div class="row">
@@ -141,46 +156,14 @@
         <h3 class="resume-list_title">education</h3>
         <div class="resume-list__block">
           <p class="resume-list__block-title">Cornell University, College of Engineering</p>
-          <p class="resume-list__block-date">2006 - 2010</p>
+          <p class="resume-list__block-date">AUG 2017 - MAY 2023</p>
           <p>
-            Bachelor Computer Engineering Lorem
-          </p>
-        </div>
-        <div class="resume-list__block">
-          <p class="resume-list__block-title">Korean augmentation to the u.s. army (KATUSA)</p>
-          <p class="resume-list__block-date">2004 - 2005</p>
-          <p>
-            Awesome student, lorem ipsum dolor sit amet, conse ctetur adipisicing elit, sed do eius-
-            mod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            <i>Bachelor of Science in Computer Science / 3.944 </i> 
           </p>
         </div>
         <div class="resume-list__block">
           <p class="resume-list__block-title">Korean minjok leadership academy (KMLA)</p>
-          <p class="resume-list__block-date">2003 - 2006</p>
-          <p>
-            Student, Lorem ipsum dolor sit amet, consecte tur adipisicing elit, sed do eiusmod tempor
-            incididunt ut
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8 section__resume resume-list">
-        <h3 class="resume-list_title">employment / activities</h3>
-        <div class="resume-list__block">
-          <p class="resume-list__block-title">Cornell Design & Tech Initiative</p>
-          <p class="resume-list__block-date">2020 - Present</p>
-          <p>
-            Backend Developer
-          </p>
-        </div>
-        <div class="resume-list__block">
-          <p class="resume-list__block-title">Travel dNation</p>
-          <p class="resume-list__block-date">2020</p>
-          <p>
-            Awesome developer, lorem ipsum dolor sit amet, conse ctetur adipisicing elit, sed do eius-
-            mod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-          </p>
+          <p class="resume-list__block-date">2013 - 2016</p>
         </div>
       </div>
     </div>
@@ -202,81 +185,217 @@
           <ul>
             <li><a href="" data-portfolio-target-tag="all">all</a></li>
             <li><a href="" data-portfolio-target-tag="mobile apps">mobile apps</a></li>
-            <li><a href="" data-portfolio-target-tag="web-sites">web-sites</a></li>
-            <li><a href="" data-portfolio-target-tag="landing-pages">landing pages</a></li>
+            <li><a href="" data-portfolio-target-tag="databases">databases</a></li>
+            <li><a href="" data-portfolio-target-tag="backend systems">backend systems</a></li>
           </ul>
         </nav>
       </div>
     </div>
     <div class="portfolio-cards">
-      <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-sites">
+      <div class="row project-card" data-portfolio-tag="databases">
         <div class="col-md-6 col-lg-5 project-card__img">
-          <img class="" src="assets/img/img_project_1_mono.png" alt="project-img">
+          <img class="" src="assets/img/img_project_0_mono copy.png" alt="project-img">
         </div>
         <div class="col-md-6 col-lg-7 project-card__info">
-          <h3 class="project-card__title">Mobile and desktop app for London hostel store  </h3>
+          <h3 class="project-card__title">R-tree Geospatial Database & Server </h3>
           <p class="project-card__description">
-            Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye.
-            Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms ham.
+            A geospatial database (coordinates and string tags) and server/CLI 
+            implemented in OCaml functional language, using the R-tree and 
+            reverse-index algorithm 
+            for read/writes and composite queries (k-nearest, radius and 
+            tag-based queries). <br><br> Developed by a team of 4, contributed to the 
+            optimization of the R-tree split & collapse algorithm and CLI/server logfile generation 
+            for future backups. 
           </p>
           <p class="project-card__stack">Used stack:</p>
           <ul class="tags">
-            <li>html5</li>
-            <li>css3</li>
+            <li>OCaml</li>
+            <li>Dune</li>
+            <li>Opium</li>
             <li>JavaScript</li>
-            <li>bower</li>
-            <li>grunt</li>
           </ul>
-          <a href="" class="project-card__link">www.superapp.com</a>
+          <a href="" class="project-card__link">https://github.coecis.cornell.edu/qjb5/cs3110-final-project</a>
         </div>
       </div>
-      <div class="row project-card"  data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="mobile apps">
+      <div class="row project-card" data-portfolio-tag="backend systems">
         <div class="col-md-6 col-lg-5 project-card__img">
-          <img class="" src="assets/img/img_project_2_mono.png" alt="project-img">
+          <img class="" src="assets/img/img_project_1_mono.jpg" alt="project-img">
         </div>
         <div class="col-md-6 col-lg-7 project-card__info">
-          <h3 class="project-card__title">Web app page for trevel company</h3>
+          <h3 class="project-card__title">Geospatial Service Backend</h3>
           <p class="project-card__description">
-            Preference any astonished unreserved mrs. Prosperous understood middletons in conviction an
-             uncommonly do. Supposing so be resolving breakfast am or perfectly. Is drew am hill from mr.
+            Designed the database and the API with Flask-RESTPlus for a 
+            location-based service using PostgreSQL and PostGIS, containerized 
+            and deployed. <br><br>
+            Selected as the Best Overall Application at the 
+            Cornell AppDev Hack Challenge hackathon out of 30+ teams.
           </p>
           <p class="project-card__stack">Used stack:</p>
           <ul class="tags">
-            <li>html5</li>
-            <li>css3</li>
-            <li>JavaScript</li>
-            <li>BEM</li>
-            <li>bower</li>
-            <li>grunt</li>
+            <li>Flask-RESTPlus</li>
+            <li>PostgreSQL</li>
+            <li>PostGIS</li>
+            <li>Docker</li>
+            <li>Python</li>
           </ul>
-          <a href="" class="project-card__link">www.travellend.com</a>
+          <a href="" class="project-card__link">https://places-backend-wk.herokuapp.com/doc</a>
         </div>
       </div>
-      <div class="row project-card"  data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="landing-pages">
+      <div class="row project-card" data-portfolio-tag="backend systems">
         <div class="col-md-6 col-lg-5 project-card__img">
-        <img class="" src="assets/img/img_project_3_mono.png" alt="project-img">
-      </div>
+          <img class="" src="assets/img/virtual_learning_platform_mono.png" alt="project-img">
+        </div>
         <div class="col-md-6 col-lg-7 project-card__info">
-        <h3 class="project-card__title">Admin template for Photo Service</h3>
-        <p class="project-card__description">
-          Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye.
-          Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms ham.
-        </p>
-        <p class="project-card__stack">Used stack:</p>
-        <ul class="tags">
-          <li>html5</li>
-          <li>css3</li>
-          <li>JavaScript</li>
-          <li>BEM</li>
-          <li>bower</li>
-          <li>grunt</li>
-        </ul>
-        <a href="" class="project-card__link">www.coolpoto.com</a>
+          <h3 class="project-card__title">Virtual Learning Platform</h3>
+          <p class="project-card__description">
+            Implemented the custom user profile, email verification and 
+            tutor-student reservation system of a virtual tutoring
+            service using Django, PostgreSQL, Docker and AWS S3 as a backend 
+            devloper in a 4-member team. <br><br>
+            Won 1st place in the Virtual Learning Category at Cornell 
+            HackOurCampus hackathon out of 200+ participants.
+          </p>
+          <p class="project-card__stack">Used stack:</p>
+          <ul class="tags">
+            <li>Django</li>
+            <li>Redis</li>
+            <li>PostgreSQL</li>
+            <li>Docker</li>
+            <li>Python</li>
+          </ul>
+          <a href="" class="project-card__link">https://github.coecis.cornell.edu/jy392/virtual-tutoring-platform</a>
+        </div>
       </div>
+      <div class="row project-card"  data-portfolio-tag="mobile apps">
+        <div class="col-md-6 col-lg-5 project-card__img">
+          <img class="" src="assets/img/img_project_3_mono.png" alt="project-img">
+        </div>
+        <div class="col-md-6 col-lg-7 project-card__info">
+          <h3 class="project-card__title">V's Pick - Mobile Application</h3>
+          <p class="project-card__description">
+            Developed a mobile Location Based Service for curated vegan 
+            restaurants in Seoul as the lead developer in a 4-member team. <br><br>
+            Implemented admin features with Firebase cloud functions to verify 
+            user-submitted restaurant updates and analyze posting patterns of 
+            individual users to prevent spamming activities or fraudulent reviews.
+          </p>
+          <p class="project-card__stack">Used stack:</p>
+          <ul class="tags">
+            <li>Expo</li>
+            <li>React Native</li>
+            <li>Cloud Firestore</li>
+          </ul>
+          <a href="" class="project-card__link">https://github.com/paul-kang-1/vegeterian_app</a>
+        </div>
       </div>
     </div>
   </section>
 <!--Portfolio-->
+
+<!--Contact-->
+  <div class="background" style="background-image: url(assets/img/guitar.png)">
+    <div id="contact" class="container section">
+      <div class="row">
+        <div class="col-md-12">
+          <p id="contacts_header" class="section__title">Get in touch_</p>
+        </div>
+      </div>
+      <div class="row contacts">
+        <div class="col-md-5 col-lg-4">
+          <div class="contacts__list">
+            <dl class="contact-list">
+              <dt>Phone:</dt>
+              <dd><a href="tel:821040779542">(+82) 10-4077-9542</a></dd>
+              <dt>Email:</dt>
+              <dd><a href="mailto:paulkang@kakao.com">paulkang@kakao.com</a></dd>
+            </dl>
+          </div>
+          <div class="contacts__social">
+            <ul>
+              <li><a href="https://www.facebook.com/dntkd97">Facebook</a></li>
+              <li><a href="https://www.linkedin.com/in/woosang">Linkedin</a></li>
+              <li><a href="https://github.com/paul-kang-1">GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-7 col-lg-5">
+          <div class="contacts__form">
+            <p class="contacts__form-title">Or just write me a letter here_</p>
+            <form action="https://submit-form.com/t4fqNU8X" target="_self">
+              <!-- All elements must have a name attribute -->
+              <input type="text" name="email" placeholder="Email" required>
+              <input type="text" name="subject" placeholder="Subject" required>
+              <textarea name="message" placeholder="Message" required></textarea>
+              <!-- A button of type submit -->
+              <button class="site-btn site-btn--form" type="submit">Submit</button>
+           </form>
+          </div>
+          <div class="footer">
+            <p>© 2020 Woosang Kang. All Rights Reserved</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--Contact-->
+
+  <script src="assets/js/jquery-2.2.4.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/menu.js"></script>
+  <script src="assets/js/jquery.waypoints.js"></script>
+  <script src="assets/js/progress-list.js"></script>
+  <script src="assets/js/section.js"></script>
+  <script src="assets/js/portfolio-filter.js"></script>
+  <script src="assets/js/slider-carousel.js"></script>
+  <script src="assets/js/mobile-menu.js"></script>
+  <script src="assets/js/contacts.js"></script>
+  <script src="assets/js/mbclicker.min.js"></script>
+  <script src="assets/js/site-btn.js"></script>
+  <script src="assets/js/style-switcher.js"></script>
+</body>
+</html>
+
+<!-- Portfolio Modal -->
+  <!-- <div class="modal fade portfolio-modal" id="portfolioModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
+        <p class="portfolio-modal__title">R-Tree Geospatial Database & Server</p>
+        <img class="portfolio-modal__img" src="assets/img/img_project_0_mono.png" alt="modal_img">
+        <p class="portfolio-modal__description">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt utlabore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum. Sed ut perspiciatis undeomnis iste natus error sit voluptatem accusantium doloremque
+          laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+          dicta sunt explicabo.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
+          conse.
+        </p>
+        <div class="portfolio-modal__link">
+          <a href="">www.superap.com</a>
+        </div>
+        <div  class="portfolio-modal__stack">
+          <p class="portfolio-modal__stack-title">Using stack:</p>
+          <ul class="tags">
+            <li>html5</li>
+            <li>css3</li>
+            <li>JavaScript</li>
+            <li>bower</li>
+            <li>grunt</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Portfolio Modal -->
 
 <!--Blog-->
   <!-- <section id="blog" class="container section">
@@ -338,119 +457,3 @@
     </div>
   </section> -->
 <!--Blog-->
-
-<!--Contact-->
-  <div class="background" style="background-image: url(assets/img/img_bg_main.jpg)">
-    <div id="contact" class="container section">
-      <div class="row">
-        <div class="col-md-12">
-          <p id="contacts_header" class="section__title">Get in touch_</p>
-        </div>
-      </div>
-      <div class="row contacts">
-        <div class="col-md-5 col-lg-4">
-          <div class="contacts__list">
-            <dl class="contact-list">
-              <dt>Phone:</dt>
-              <dd><a href="tel:821040779542">(+82) 10-4077-9542</a></dd>
-              <dt>Email:</dt>
-              <dd><a href="mailto:paulkang@kakao.com">paulkang@kakao.com</a></dd>
-            </dl>
-          </div>
-          <div class="contacts__social">
-            <ul>
-              <li><a href="">Facebook</a></li>
-              <li><a href="">Linkedin</a></li>
-              <li><a href="">GitHub</a></li>
-              <li><a href="">Bitbucket</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-7 col-lg-5">
-          <div class="contacts__form">
-            <p class="contacts__form-title">Or just write me a letter here_</p>
-            <form class="js-form" action="mail.php" method="POST">
-              <div class="form-group">
-                <input class="form-field js-field-name" type="text" placeholder="Your name" required>
-                <span class="form-validation"></span>
-                <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
-              </div>
-              <div class="form-group">
-                <input class="form-field js-field-email" type="email"  placeholder="Your e-mail" required>
-                <span class="form-validation"></span>
-                <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
-              </div>
-              <div class="form-group">
-                <textarea class="form-field js-field-message" placeholder="Type the message here" required></textarea>
-                <span class="form-validation"></span>
-                <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
-              </div>
-              <button class="site-btn site-btn--form" type="submit" value="Send">Send</button>
-            </form>
-          </div>
-          <div class="footer">
-            <p>© 2020 Woosang Kang. All Rights Reserved</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!--Contact-->
-
-<!-- Portfolio Modal -->
-  <div class="modal fade portfolio-modal" id="portfolioModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
-        <p class="portfolio-modal__title">Mobile and desktop app for London hostel store</p>
-        <img class="portfolio-modal__img" src="assets/img/img_project_1_mono.png" alt="modal_img">
-        <p class="portfolio-modal__description">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt utlabore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex
-          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-          anim id est laborum. Sed ut perspiciatis undeomnis iste natus error sit voluptatem accusantium doloremque
-          laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-          dicta sunt explicabo.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-          conse.
-        </p>
-        <div class="portfolio-modal__link">
-          <a href="">www.superap.com</a>
-        </div>
-        <div  class="portfolio-modal__stack">
-          <p class="portfolio-modal__stack-title">Using stack:</p>
-          <ul class="tags">
-            <li>html5</li>
-            <li>css3</li>
-            <li>JavaScript</li>
-            <li>bower</li>
-            <li>grunt</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Portfolio Modal -->
-
-  <script src="assets/js/jquery-2.2.4.min.js"></script>
-  <script src="assets/js/popper.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/menu.js"></script>
-  <script src="assets/js/jquery.waypoints.js"></script>
-  <script src="assets/js/progress-list.js"></script>
-  <script src="assets/js/section.js"></script>
-  <script src="assets/js/portfolio-filter.js"></script>
-  <script src="assets/js/slider-carousel.js"></script>
-  <script src="assets/js/mobile-menu.js"></script>
-  <script src="assets/js/contacts.js"></script>
-  <script src="assets/js/mbclicker.min.js"></script>
-  <script src="assets/js/site-btn.js"></script>
-  <script src="assets/js/style-switcher.js"></script>
-</body>
-</html>

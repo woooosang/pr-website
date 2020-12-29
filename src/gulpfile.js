@@ -69,11 +69,6 @@ function styleBuild() {
         .pipe(gulp.dest("./assets/css"));
 }
 
-// Watcher
-// function watchFile() {
-//     return gulp.watch(paths.src.html, );
-// }
-
 // Build for prod
 // function build(callback) {
 //     styleBuild().pipe(callback);

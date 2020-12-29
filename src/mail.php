@@ -12,7 +12,7 @@
 		$subject = $_POST['subject'];
 	}
 
-	reset($_POST);
+	// reset($_POST);
 
 	$body = "";
 	$body .= "<p><b>Name: </b>".$_POST['name']."</p>";
