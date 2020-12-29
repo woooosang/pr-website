@@ -5,9 +5,11 @@ const autoprefixer = require("gulp-autoprefixer");
 const notify = require("gulp-notify");
 const cssnano = require("gulp-cssnano");
 const plumber = require("gulp-plumber");
+const deploy = require("gulp-gh-pages");
 const browserSync = require("browser-sync");
 const imagemin = require("gulp-imagemin");
 const uglify = require("gulp-uglify");
+const gulpNotify = require("gulp-notify");
 
 const paths = {
     src: {
@@ -137,12 +139,17 @@ function watchHTML() {
     return gulp.watch("*.html").on("change", browserSync.reload);
 }
 
+function deploy() {
+    return gulp.src("../dist/**/*").pipe(deploy());
+}
+
 const defaultTasksDev = gulp.series(
     styleBuild,
     gulp.parallel(serveDev, watchHTML)
 );
 
-const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), serve);
+// const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), serve);
+const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), deploy);
 
 // Helpers
 function onError(error) {
