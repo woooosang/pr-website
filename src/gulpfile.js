@@ -93,6 +93,11 @@ function copyFonts() {
     return gulp.src([paths.src.fonts]).pipe(gulp.dest(paths.dest.fonts));
 }
 
+// Copy CNAME file
+function copyCNAME() {
+    return gulp.src(".CNAME").pipe(gulp.dest(paths.dest.dest));
+}
+
 // Copy Downloads
 function copyDownloads() {
     return gulp
@@ -117,6 +122,7 @@ const moveAssets = gulp.parallel(
     copyCSS,
     copyPages,
     copyFonts,
+    copyCNAME,
     copyDownloads,
     image,
     uglifyJS
