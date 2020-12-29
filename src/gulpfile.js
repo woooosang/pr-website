@@ -95,7 +95,7 @@ function copyFonts() {
 
 // Copy CNAME file
 function copyCNAME() {
-    return gulp.src(".CNAME").pipe(gulp.dest(paths.dest.dest));
+    return gulp.src("CNAME").pipe(gulp.dest(paths.dest.dest));
 }
 
 // Copy Downloads
