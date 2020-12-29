@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "gulp dev",
-    "start:prod": "gulp"
+    "start:prod": "gulp",
+    "deploy": "gulp deploy"
   },
   "devDependencies": {
     "browser-sync": "^2.26.13",
