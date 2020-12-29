@@ -1,0 +1,1 @@
+"use strict";$(".carousel").carousel({pause:"hover",interval:5e3}),$(".carousel-control-prev").click(function(){$(".carousel").carousel("prev")}),$(".carousel-control-next").click(function(){$(".carousel").carousel("next")});
