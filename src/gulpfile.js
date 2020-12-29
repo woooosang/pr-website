@@ -5,7 +5,7 @@ const autoprefixer = require("gulp-autoprefixer");
 const notify = require("gulp-notify");
 const cssnano = require("gulp-cssnano");
 const plumber = require("gulp-plumber");
-const deploy = require("gulp-gh-pages");
+const deploySite = require("gulp-gh-pages");
 const browserSync = require("browser-sync");
 const imagemin = require("gulp-imagemin");
 const uglify = require("gulp-uglify");
@@ -139,8 +139,8 @@ function watchHTML() {
     return gulp.watch("*.html").on("change", browserSync.reload);
 }
 
-function deploySite() {
-    return gulp.src("../dist/**/*").pipe(deploy());
+function deployPage() {
+    return gulp.src("../dist/**/*").pipe(deploySite());
 }
 
 const defaultTasksDev = gulp.series(
@@ -149,7 +149,7 @@ const defaultTasksDev = gulp.series(
 );
 
 // const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), serve);
-const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), deploySite);
+const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), deployPage);
 
 // Helpers
 function onError(error) {
@@ -158,4 +158,4 @@ function onError(error) {
 }
 
 exports.dev = defaultTasksDev;
-exports.default = defaultTasks;
+exports.deploy = defaultTasks;
