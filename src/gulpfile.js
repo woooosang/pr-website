@@ -139,7 +139,7 @@ function watchHTML() {
     return gulp.watch("*.html").on("change", browserSync.reload);
 }
 
-function deploy() {
+function deploySite() {
     return gulp.src("../dist/**/*").pipe(deploy());
 }
 
@@ -149,7 +149,7 @@ const defaultTasksDev = gulp.series(
 );
 
 // const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), serve);
-const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), deploy);
+const defaultTasks = gulp.series(gulp.parallel(moveAssets, style), deploySite);
 
 // Helpers
 function onError(error) {
