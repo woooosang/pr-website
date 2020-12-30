@@ -9,7 +9,6 @@ const deploySite = require("gulp-gh-pages");
 const browserSync = require("browser-sync");
 const imagemin = require("gulp-imagemin");
 const uglify = require("gulp-uglify");
-const gulpNotify = require("gulp-notify");
 
 const paths = {
     src: {
@@ -70,11 +69,6 @@ function styleBuild() {
         .pipe(gulp.dest("./assets/css"));
 }
 
-// Build for prod
-// function build(callback) {
-//     styleBuild().pipe(callback);
-// }
-
 // Copy CSS
 function copyCSS() {
     return gulp.src([paths.src.css]).pipe(gulp.dest(paths.dest.css));
@@ -126,11 +120,11 @@ const moveAssets = gulp.parallel(
 );
 
 // Serve
-function serve() {
-    return browserSync.init({
-        server: paths.dest.dest,
-    });
-}
+// function serve() {
+//     return browserSync.init({
+//         server: paths.dest.dest,
+//     });
+// }
 
 function serveDev() {
     return browserSync.init({
