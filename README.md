@@ -1,3 +1,4 @@
 # My personal website
 
-- built with gulp v4 and sass
+- built with Gulp 4 and Sass, hosted through Github Pages/AWS Route 53
+- available on [woosang.io](https://woosang.io)
