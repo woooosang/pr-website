@@ -1,3 +1,4 @@
 # dependencies
 src/node_modules
 /dist
+src/.publish
