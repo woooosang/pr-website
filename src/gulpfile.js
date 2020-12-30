@@ -20,7 +20,6 @@ const paths = {
         img: "./assets/img/*",
         js: "./assets/js/*.js",
         html: "./*.html",
-        php: "./*.php",
         scss: "./assets/scss/**/*.scss",
         scssMain: "./assets/scss/main.scss",
     },
@@ -83,9 +82,7 @@ function copyCSS() {
 
 // Copy Pages
 function copyPages() {
-    return gulp
-        .src([paths.src.html, paths.src.php])
-        .pipe(gulp.dest(paths.dest.dest));
+    return gulp.src([paths.src.html]).pipe(gulp.dest(paths.dest.dest));
 }
 
 // Copy Fonts
