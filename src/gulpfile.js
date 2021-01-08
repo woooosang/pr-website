@@ -19,6 +19,7 @@ const paths = {
         img: "./assets/img/*",
         js: "./assets/js/*.js",
         html: "./*.html",
+        cname: "CNAME",
         scss: "./assets/scss/**/*.scss",
         scssMain: "./assets/scss/main.scss",
     },
@@ -31,6 +32,10 @@ const paths = {
         js: "../dist/assets/js",
     },
 };
+
+const copySrc = ["css", "html", "fonts", "cname", "downloads"];
+
+const copyDest = ["css", "dest", "fonts", "dest", "downloads"];
 
 // SASS
 function style() {
@@ -69,31 +74,20 @@ function styleBuild() {
         .pipe(gulp.dest("./assets/css"));
 }
 
-// Copy CSS
-function copyCSS() {
-    return gulp.src([paths.src.css]).pipe(gulp.dest(paths.dest.css));
+function copy(from, to) {
+    return gulp.src(from).pipe(gulp.dest(to));
 }
 
-// Copy Pages
-function copyPages() {
-    return gulp.src([paths.src.html]).pipe(gulp.dest(paths.dest.dest));
-}
-
-// Copy Fonts
-function copyFonts() {
-    return gulp.src([paths.src.fonts]).pipe(gulp.dest(paths.dest.fonts));
-}
-
-// Copy CNAME file
-function copyCNAME() {
-    return gulp.src("CNAME").pipe(gulp.dest(paths.dest.dest));
-}
-
-// Copy Downloads
-function copyDownloads() {
-    return gulp
-        .src([paths.src.downloads])
-        .pipe(gulp.dest(paths.dest.downloads));
+function copyFiles() {
+    copySrc
+        .map(function (e, i) {
+            return [e, copyDest[i]];
+        })
+        .forEach((f, t) => {
+            const src = paths.src[f];
+            const dest = paths.dest[t];
+            copy(src, dest);
+        });
 }
 
 // Minify images
@@ -109,22 +103,7 @@ function uglifyJS() {
     return gulp.src(paths.src.js).pipe(uglify()).pipe(gulp.dest(paths.dest.js));
 }
 
-const moveAssets = gulp.parallel(
-    copyCSS,
-    copyPages,
-    copyFonts,
-    copyCNAME,
-    copyDownloads,
-    image,
-    uglifyJS
-);
-
-// Serve
-// function serve() {
-//     return browserSync.init({
-//         server: paths.dest.dest,
-//     });
-// }
+const moveAssets = gulp.parallel(copyFiles, image, uglifyJS);
 
 function serveDev() {
     return browserSync.init({
@@ -154,5 +133,6 @@ function onError(error) {
     this.emit("end");
 }
 
+exports.copy = copyFiles;
 exports.dev = defaultTasksDev;
 exports.deploy = defaultTasks;
