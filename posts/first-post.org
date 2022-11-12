@@ -1,0 +1,8 @@
+#+hugo_base_dir: ../
+
+* First post with ox-hugo
+:PROPERTIES:
+:EXPORT_FILE_NAME: first-post-with-ox--hugo
+:EXPORT_DATE: <2022-11-12 Sat 02:30>
+:END:
+This is my first attempt on creating a static website with =ox-Hugo=, and I'm loving the convenience!
