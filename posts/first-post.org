@@ -1,6 +1,6 @@
 #+hugo_base_dir: ../
 
-* First post with ox-hugo
+* First post with ox-hugo   :emacs:hugo:@scribbles:
 :PROPERTIES:
 :EXPORT_FILE_NAME: first-post-with-ox--hugo
 :EXPORT_DATE: <2022-11-12 Sat 02:30>
