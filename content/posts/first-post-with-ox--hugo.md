@@ -7,4 +7,4 @@ categories = ["scribbles"]
 draft = false
 +++
 
-This is my first attempt on creating a static website with `ox-Hugo`, and I'm loving the convenience!
+This is my first attempt on creating a static website with `ox-Hugo`, and I'm loving the flow!
