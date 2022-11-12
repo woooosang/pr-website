@@ -1,8 +1,8 @@
 +++
-title = "First post with ox-hugo"
+title = "First Post!"
 author = ["Woosang Kang"]
-date = 2022-11-12T02:30:00-05:00
-tags = ["emacs", "hugo"]
+date = 2022-11-12T18:56:00-05:00
+tags = ["org", "hugo"]
 categories = ["scribbles"]
 draft = false
 +++
