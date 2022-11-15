@@ -1,4 +1,21 @@
 #+hugo_base_dir: ./
+* About
+:PROPERTIES:
+:export_hugo_section: ./
+:END:
+
+** DONE (Yet Another) Intro
+CLOSED: [2022-11-14 Mon 23:58]
+:PROPERTIES:
+:EXPORT_FILE_NAME: about
+:END:
+
+[[/images/about-photo.png]]
+
+Hi, I'm Woosang, currently a CS student at an Upstate college with a glum weather in the States. My interest lies on creating resilient backend services (especially for Go), different modes of communications (gRPC, AMQP, etc), and tweaking Emacs configs.
+
+On my spare time, I like to [[https://youtu.be/qyQLNk6QoJk][make music]], hike mountains and chill with my cats.
+
 * Posts
 :PROPERTIES:
 :export_hugo_section: posts
@@ -20,3 +37,4 @@ That was when I ran into [[https://gohugo.io][Hugo]] paired with [[https://ox-hu
     hugo server --buildDrafts --navigateToChanged
   #+end_src
 Anyway, it feels like I've finally found a nice and cozy setup. Let's see where this leads to!
+

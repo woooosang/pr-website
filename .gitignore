@@ -2,3 +2,4 @@
 src/node_modules
 /dist
 src/.publish
+*DS_STORE
