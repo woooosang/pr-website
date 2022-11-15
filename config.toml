@@ -23,6 +23,13 @@ title = 'Scribbles and Struggles'
     weight = 1
 
   [[menu.main]]
+    itentifier = "about"
+    layout = "single"
+    name = "About"
+    url = "/about/"
+    weight = 1.5
+
+  [[menu.main]]
     identifier = "categories"
     name = "Categories"
     url = "/categories/"
@@ -33,13 +40,6 @@ title = 'Scribbles and Struggles'
     name = "Tags"
     url = "/tags/"
     weight = 3
-
-  [[menu.main]]
-    itentifier = "about"
-    layout = "single"
-    name = "About"
-    url = "/about/"
-    weight = 4
 
 # Footer
   [[menu.footer]]
