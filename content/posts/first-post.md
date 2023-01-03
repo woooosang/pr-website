@@ -1,7 +1,7 @@
 +++
 title = "First Post!"
 author = ["Woosang Kang"]
-date = 2022-11-12T18:56:00-05:00
+date = 2022-11-12T18:56:00+09:00
 tags = ["org", "hugo"]
 categories = ["scribbles"]
 draft = false
@@ -17,7 +17,7 @@ That was when I ran into [Hugo](https://gohugo.io) paired with [ox-Hugo](https:/
 -   The whole [Blog repo](https://github.com/paul-kang-1/pr-website) stays under 1KB, and I can leverage tools like `Org-capture` to easily create new posts.
 -   With the below command and some use of [autosave setup](https://ox-hugo.scripter.co/doc/auto-export-on-saving/), you can introduce hot loading to the local development.
     ```sh
-          hugo server --buildDrafts --navigateToChanged
+        hugo server --buildDrafts --navigateToChanged
     ```
 
 Anyway, it feels like I've finally found a nice and cozy setup. Let's see where this leads to!

@@ -1,6 +1,6 @@
 baseURL = 'https://woosang.io'
 languageCode = 'en-us'
-title = 'Scribbles and Struggles'
+title = 'Scribble Note'
 
 # Modules
 [module]
