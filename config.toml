@@ -5,7 +5,8 @@ title = 'Scribble Note'
 # Modules
 [module]
   [[module.imports]]
-    path = "github.com/colorchestra/smol"
+    # path = "github.com/colorchestra/smol"
+    path = "github.com/lukasjoswiak/etch"
 
 # Parameters
 [params]

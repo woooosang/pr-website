@@ -1,2 +1,4 @@
+github.com/LukasJoswiak/etch v0.0.0-20221013042144-3286754ceb4e h1:jqtIPgKKdLwiwNtmvZqlSJGjwa1lZphDap7p0H+Y0ic=
+github.com/LukasJoswiak/etch v0.0.0-20221013042144-3286754ceb4e/go.mod h1:tdCjHyDbi/JUH+PwT7EuRAoTu1tIrDvTQgZ5UJLNe7Q=
 github.com/colorchestra/smol v0.0.0-20210810214745-4129f82cd766 h1:5/rg5hX9hzYWpTjiyvv1ip5LBDVOT4Fi3UCXhKc3ssA=
 github.com/colorchestra/smol v0.0.0-20210810214745-4129f82cd766/go.mod h1:zCNGH1Qu+A99iK4ZWFGilgcr9e1HVs/j25UmmH+EOv8=
