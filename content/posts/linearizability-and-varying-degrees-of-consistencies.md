@@ -16,21 +16,39 @@ We can also define hierarchies between different consistency semantics: \\(C\_s\
 
 ## Causal Consistency {#causal-consistency}
 
-Using Lamport's _happens-before_ relation, we can define a consistency semantic. From the [CAC](https://www.cs.cornell.edu/lorenzo/papers/cac-tr.pdf) paper, an execution is _causally consistent_ if \\(\exists\\) a DAG \\(G\\), a happens-before graph defined by the _precedes_ partial ordering (\\(\succ\_G\\)), satisfies the following check:
+Using Lamport's _happened-before_ relation, we can define a consistency semantic. As the [CAC](https://www.cs.cornell.edu/lorenzo/papers/cac-tr.pdf) paper states, an execution is _causally consistent_ if \\(\exists\\) a DAG \\(G\\), a happens-before graph defined by the _precedes_ partial ordering (\\(\succ\_G\\)), satisfies the following check:
 
 -   Serial ordering at each node: If \\(v\\) and \\(v^{\prime}\\) are vertices corresponding to operations by the same node, \\(v.startTime < v^{\prime}.startTime \Leftrightarrow v\prec\_G v^{\prime}\\).
--   Read returns the latest preceding concurrent writes
+-   Read returns the latest preceding concurrent writes. Note that this doesn't place any restrictions  on the ordering of each of the concurrent writes.
 
-The important point is that
+The second point essentially _separates consistency from conflict resolution_, as in the responsibility of resolving order between the concurrent writes is passed to the individual nodes. So there is ****no guarantee of a total ordering**** in an execution that is causally consistent; as long as the partial ordering defined by a happened-before relation is satisfied, different nodes may observe different permutations of a valid execution.
 
 
-## Sequential Consistency {#sequential-consistency}
+### Real-time-causal Consistency (RTC) {#real-time-causal-consistency--rtc}
+
+We could also add a real-time element to the consistency test regarding the happened-before graph above. An execution \\(e\\) is _RTC consistent_ if the HB graph satisfies this additional property:
+
+-   \\(\forall u, v: u.endTime < v.startTime \Rightarrow v \nprec\_G u\\) ()
+
+
+## Sequential Consistency (Lamport) {#sequential-consistency--lamport}
+
+Unlike causal consistency, sequential consistency constrains the execution to be in some _total order_, and the resulting execution should be consistent with the order of operations on each individual nodes.
+
+
+## Linearizability {#linearizability}
+
+
+## External Consistency (Gifford) {#external-consistency--gifford}
+
+
+## Serializability {#serializability}
 
 
 ## Further Readings {#further-readings}
 
 -   [Consistency Models (Jepsen)](https://jepsen.io/consistency)
 -   [Linearizability: A Correctness Condition for Concurrent Objects (Herilhy)](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwi2mqernbX-AhXQMlkFHSzDAQoQFnoECAwQAQ&url=https%3A%2F%2Fcs.brown.edu%2F~mph%2FHerlihyW90%2Fp463-herlihy.pdf&usg=AOvVaw2I8TvobQuAizpu3MojvSZO)
--
+-   [Consistency, Availability and Convergence (Marajan et al.)](https://www.cs.cornell.edu/lorenzo/papers/cac-tr.pdf)
 
 [^fn:1]: Adopted from [Consistency, Availability and Convergence (Marajan et al.)](https://www.cs.cornell.edu/lorenzo/papers/cac-tr.pdf)
