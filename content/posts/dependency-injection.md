@@ -9,10 +9,12 @@ draft = false
 
 ## Breaking the Code Coupling {#breaking-the-code-coupling}
 
-Prior to adopting the Dependency Injection pattern, "unit testing" the codebase was virtually impossible, mainly due to its external dependencies (e.g. Firebase Cloud Messaging client). Since all the dependencies were tightly coupled _within_ the function that made use of it, it was necessary to initialize all the third-party dependencies in order to test a small snippet of code that I wrote.
+Prior to adopting the Dependency Injection pattern, "unit testing" the codebase was virtually impossible, mainly due to its external dependencies (e.g. Firebase Cloud Messaging client), which had to be initialized solely to test a small snippet of newly written code.
 
 
 ## Enforcing The Repository Pattern {#enforcing-the-repository-pattern}
+
+Although the previous codebase vaguely followed the idea of the Repository Pattern, it failed to
 
 ```go
 type (
@@ -26,7 +28,7 @@ type (
 	}
 
 	HallServiceInstance struct {
-		hallRepository repositories.HallRepsoitory
+		hallRepository repositories.HallRepository
 	}
 )
 
@@ -42,3 +44,9 @@ Although DI improves code readability and eases up the testing procedure, it doe
 
 -   ****Compile-time injection****: It's always to find any discrepancies in the dependency graph prior to running the actual application.
 -   ****Enhanced readability****: In many cases, there will be several _initialization groups_
+
+
+## References {#references}
+
+-   [The Repository Pattern](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-design#the-repository-pattern)
+-   [Google Wire Guide](https://github.com/google/wire/blob/main/docs/guide.md)
