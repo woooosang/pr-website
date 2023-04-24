@@ -1,7 +1,8 @@
 +++
 title = "Understanding Different Consistency Guarantees :systems:@TIL"
 author = ["Woosang Kang"]
-draft = true
+date = 2023-04-24T01:14:00-04:00
+draft = false
 +++
 
 On implementing a distributed system, there are a whole variety of consistency models to choose from. Going through papers on system implementations of varying degrees of consistency guarantees (e.g.[Spanner](http://www.cs.cornell.edu/courses/cs5414/2017fa/papers/Spanner.pdf) or [Bayou](http://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p172-terry.pdf)), I found myself using strictly different terms and models interchangeably. To prevent further confusion, I thought it would be a good idea to cover some key terminologies here.

@@ -101,7 +101,8 @@ While the last post mostly focused on unit testing, which let us test code that 
 
 WIP Content
 
-** TODO Understanding Different Consistency Guarantees :systems:@TIL
+** DONE Understanding Different Consistency Guarantees :systems:@TIL
+CLOSED: [2023-04-24 Mon 01:14]
 :PROPERTIES:
 :EXPORT_FILE_NAME: linearizability-and-varying-degrees-of-consistencies
 :END:
