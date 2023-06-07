@@ -1,10 +1,9 @@
 +++
 title = "Dependency Injection in Go Microservices"
 author = ["Woosang Kang"]
-date = 2023-01-02T12:31:00+09:00
 tags = ["dev", "go"]
 categories = ["TIL"]
-draft = false
+draft = true
 +++
 
 ## Breaking the Code Coupling {#breaking-the-code-coupling}
