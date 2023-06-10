@@ -38,8 +38,7 @@ That was when I ran into [[https://gohugo.io][Hugo]] paired with [[https://ox-hu
   #+end_src
 Anyway, it feels like I've finally found a nice and cozy setup. Let's see where this leads to!
 
-** DONE Dependency Injection in Go Microservices :dev:go:@TIL:
-CLOSED: [2023-01-02 Mon 12:31]
+** TODO Dependency Injection in Go Microservices :dev:go:@TIL:
 :PROPERTIES:
 :EXPORT_FILE_NAME: dependency-injection
 :END:
@@ -107,12 +106,12 @@ CLOSED: [2023-04-24 Mon 01:14]
 :EXPORT_FILE_NAME: linearizability-and-varying-degrees-of-consistencies
 :END:
 
-On implementing a distributed system, there are a whole variety of consistency models to choose from. Going through papers on system implementations of varying degrees of consistency guarantees (e.g.[[http://www.cs.cornell.edu/courses/cs5414/2017fa/papers/Spanner.pdf][Spanner]] or [[http://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p172-terry.pdf][Bayou]]), I found myself using strictly different terms and models interchangeably. To prevent further confusion, I thought it would be a good idea to cover some key terminologies here.
+ When it comes to implementing distributed systems, there are a whole variety of consistency models to choose from. Going through papers on system implementations of varying degrees of consistency guarantees (e.g.[[http://www.cs.cornell.edu/courses/cs5414/2017fa/papers/Spanner.pdf][Spanner]] or [[http://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p172-terry.pdf][Bayou]]), I found myself using strictly different terms and models interchangeably. To prevent further confusion, I thought it would be a good idea to cover some key terminologies here.
 
 *** What /is/ Consistency?
-In a distributed systems perspective, **consistency** is a test on the execution of operations[fn:1] (here, let's limit the type of operations to ~read()~ and ~write(v)~ for the sake of simplicity): if the test for a consistency condition $C$ passes on execution $e$, we say $e$ is $C$-consistent.
+There are myriads of different consistency guarantees, but what /is/ consistency in the context of distributed systems in the first place? Different definitions may exist, but I found the following the clearest: **consistency** is a test on the execution of operations[fn:1] (here, let's limit the type of operations to ~read()~ and ~write(v)~ for the sake of simplicity): if the test for a consistency condition $C$ passes on execution $e$, we say $e$ is $C$-consistent.
 
-We can also define hierarchies between different consistency semantics: $C_s$ is /stronger/ than $C_w$ iff the set of executions accepted by $C_s$ is a subset of the set of executions accepted by $C_w$. ($E_{C_s}\subset E_{C_w}$) If neither of them is stronger, than the two are incomparable.
+We can also define hierarchies between different consistency semantics: $C_s$ is /stronger/ than $C_w$ if and only if the set of executions accepted by $C_s$ is a subset of the set of executions accepted by $C_w$. ($E_{C_s}\subset E_{C_w}$) If neither of them is stronger, than the two are incomparable.
 
 *** Causal Consistency
 Using Lamport's /happened-before/ relation, we can define a consistency semantic. As the [[https://www.cs.cornell.edu/lorenzo/papers/cac-tr.pdf][CAC]] paper states, an execution is /causally consistent/ if $\exists$ a DAG $G$, a happens-before graph defined by the /precedes/ partial ordering ($\succ_G$), satisfies the following check:
@@ -124,7 +123,7 @@ The second point essentially /separates consistency from conflict resolution/, a
 
 **** Real-time-causal Consistency (RTC)
 We could also add a real-time element to the consistency test regarding the happened-before graph above. An execution $e$ is /RTC consistent/ if the HB graph satisfies this additional property:
-+ $\forall u, v: u.endTime < v.startTime \Rightarrow v \nprec_G u$ ()
++ $\forall u, v: u.endTime < v.startTime \Rightarrow v \nprec_G u$
 
 *** Sequential Consistency (Lamport)
 Unlike causal consistency, sequential consistency constrains the execution to be in some /total order/, and the resulting execution should be consistent with the order of operations on each individual nodes.
@@ -142,24 +141,3 @@ Unlike causal consistency, sequential consistency constrains the execution to be
 + [[https://jepsen.io/consistency][Consistency Models (Jepsen)]]
 + [[https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwi2mqernbX-AhXQMlkFHSzDAQoQFnoECAwQAQ&url=https%3A%2F%2Fcs.brown.edu%2F~mph%2FHerlihyW90%2Fp463-herlihy.pdf&usg=AOvVaw2I8TvobQuAizpu3MojvSZO][Linearizability: A Correctness Condition for Concurrent Objects (Herilhy)]]
 + [[https://www.cs.cornell.edu/lorenzo/papers/cac-tr.pdf][Consistency, Availability and Convergence (Marajan et al.)]]
-
-** TODO Spanner :system:@Papers
-:PROPERTIES:
-:EXPORT_FILE_NAME: spanner
-:END:
-
-TODO
-
-** TODO Dynamo :system:@Papers
-:PROPERTIES:
-:EXPORT_FILE_NAME: dynamo
-:END:
-
-TODO
-
-** TODO Bayou :system:@Papers
-:PROPERTIES:
-:EXPORT_FILE_NAME: bayou
-:END:
-
-TODO
