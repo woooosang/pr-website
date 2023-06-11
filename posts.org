@@ -1,4 +1,5 @@
 #+hugo_base_dir: ./
+#+STARTUP: nolatexpreview
 * About
 :PROPERTIES:
 :export_hugo_section: ./
