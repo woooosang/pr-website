@@ -7,12 +7,12 @@ categories = ["TIL"]
 draft = false
 +++
 
-When it comes to implementing distributed systems, there are a whole variety of consistency models to choose from. Going through papers on system implementations of varying degrees of consistency guarantees (e.g.[Spanner](http://www.cs.cornell.edu/courses/cs5414/2017fa/papers/Spanner.pdf) or [Bayou](http://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p172-terry.pdf)), I found myself using strictly different terms and models interchangeably. To prevent further confusion, I thought it would be a good idea to cover some key terminologies here.
+When it comes to implementing distributed systems, there are a whole variety of consistency models to choose from. Going through papers on system implementations of varying degrees of consistency guarantees (e.g.[Spanner](http://www.cs.cornell.edu/courses/cs5414/2017fa/papers/Spanner.pdf) or [Bayou](http://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p172-terry.pdf)), I found myself mixing up strictly different terms and models. To prevent further confusion, I thought it would be a good idea to cover some key terminologies here.
 
 
 ## What _is_ Consistency? {#what-is-consistency}
 
-There are myriads of different consistency guarantees, but what _is_ consistency in the context of distributed systems in the first place? Different definitions may exist, but I found the following the clearest: ****consistency**** is a test on the execution of operations[^fn:1] (here, let's limit the type of operations to `read()` and `write(v)` for the sake of simplicity): if the test for a consistency condition \\(C\\) passes on execution \\(e\\), we say \\(e\\) is $C$-consistent.
+There are myriads of different consistency guarantees, but what _is_ consistency in the context of distributed systems in the first place? Different definitions may exist, but I found the following the clearest: ****consistency**** is a test on the execution of operations[^fn:1] (WLOG, let's limit the type of operations to `read()` and `write(v)` for the sake of simplicity): if the test for a consistency condition \\(C\\) passes on execution \\(e\\), we say \\(e\\) is $C$-consistent.
 
 We can also define hierarchies between different consistency semantics: \\(C\_s\\) is _stronger_ than \\(C\_w\\) if and only if the set of executions accepted by \\(C\_s\\) is a subset of the set of executions accepted by \\(C\_w\\). (\\(E\_{C\_s}\subset E\_{C\_w}\\)) If neither of them is stronger, than the two are incomparable.
 
@@ -29,7 +29,7 @@ The second point essentially _separates consistency from conflict resolution_, a
 
 ### Real-time-causal Consistency (RTC) {#real-time-causal-consistency--rtc}
 
-We could also add a real-time element to the consistency test regarding the happened-before graph above. An execution \\(e\\) is _RTC consistent_ if the HB graph satisfies this additional property:
+We could also add a real-time requirement to the consistency test regarding the happened-before graph above. An execution \\(e\\) is _RTC consistent_ if the HB graph satisfies this additional property:
 
 -   \\(\forall u, v: u.endTime < v.startTime \Rightarrow v \nprec\_G u\\)
 
