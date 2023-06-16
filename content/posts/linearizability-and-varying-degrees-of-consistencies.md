@@ -2,8 +2,8 @@
 title = "Understanding Different Consistency Guarantees"
 author = ["Woosang Kang"]
 date = 2023-04-24T01:14:00-04:00
-tags = ["systems"]
-categories = ["TIL"]
+tags = ["distributed"]
+categories = ["systems"]
 draft = false
 +++
 

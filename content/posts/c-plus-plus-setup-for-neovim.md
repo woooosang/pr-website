@@ -63,7 +63,7 @@ Now that the errors are gone, it's time to fine tune the formatter, `clang-forma
 
 ## Further Troubleshooting {#further-troubleshooting}
 
-One error that took me a particularly long time figuring out the root cause was the error message `bits/c++config.h file not found` that occured in headers. I tried including the directories that apparently included the lacking file, but the issue persisted. To dig deeper, I tried compiling a small test file with the following flags with `clang++`.
+One error that took me a particularly long time figuring out the root cause was the error message `bits/c++config.h file not found` that occured in headers. I tried including the directories that apparently included the lacking file, but the issue persisted. To dig deeper, I tried compiling (with verbose mode) a small test file with the following flags with `clang++`.
 
 ```shell
 $ clang++ --std=c++2a -Wall --verbose main.cpp -o test \
@@ -79,4 +79,4 @@ Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/12
 Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/12
 ```
 
-So it turned out to be that I've installed an older version of `libstdc++` that `clang` wasn't using! After installing `libstdc++-12-dev` along with `g++-12-multilib` and `gcc-12-multilib`, all the features were working seamlessly without any additional configuration files.
+So it turned out to be that I've installed and attempted to include an older version (11) of `libstdc++` that `clang` wasn't using! After installing `libstdc++-12-dev` along with `g++-12-multilib` and `gcc-12-multilib`, all the features were working seamlessly without any additional configuration files.
