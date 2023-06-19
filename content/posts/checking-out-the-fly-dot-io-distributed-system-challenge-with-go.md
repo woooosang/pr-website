@@ -1,12 +1,15 @@
 +++
 title = "Fly.io Distributed System Challenge with Go (Part 1)"
 author = ["Woosang Kang"]
+date = 2023-06-19T17:11:00-04:00
 tags = ["dev", "go"]
 categories = ["systems"]
-draft = true
+draft = false
 +++
 
 Recently, I ran into an instresting challenge on distributed systems provided by [Fly.io](https://fly.io/dist-sys/). After going through a laborious semester trying to get in touch with my [inner Ninja](https://www.cs.cornell.edu/courses/cs5414/2023sp/) of theory and implementation, I thought that it would be a good chance to check my understanding of the field.
+
+-   Check out [my repo](https://github.com/paul-kang-1/flyio-distributed-challenge) for the actual implementation in Go!
 
 
 ## Part 1, 2: Echo / Unique ID Generation {#part-1-2-echo-unique-id-generation}
@@ -46,44 +49,89 @@ Of course, this approach is not efficient at all. Even for a simple network as i
 
 #### Implementing in Go {#implementing-in-go}
 
-The idea for this stage was pretty simple, but there were some issues worth considering in the implementation process.
+The idea for this stage was pretty simple, but there were some issues worth considering in the implementation process. In order to check whether a value already has been forwarded (on the receipt of a broadcast request), there should be some sort of a database that keeps all observed (and forwarded) values.
+
+However, a naive hashset (`map[int]any`) will be problematic. For each node, there will be a main event loop running, waiting for incoming requests. Once a message arrives, a handler for that message will be called in a separate goroutine. This means that the read/write operations to the map is most likely concurrent, which is not allowed for maps in Go. So I created a wrapper for the map, along with its own mutex as below.
+
+```go
+type MapStruct[K comparable, V any] struct {
+	sync.RWMutex
+	M map[K]V
+}
+
+func (m *MapStruct[K, V]) Get(key K) (value V, ok bool) {
+	m.RLock()
+	defer m.RUnlock()
+	value, ok = m.M[key]
+	return
+}
+
+// ...omitted
+```
+
+This resolved the concurrent map read/write issue, and when run on a system of 5 nodes with a load of 10 messages/sec, showed a `message-per-op` value of 10.14, meaning that it took approximately 10 messages internally to broadcast. However, when everything scaled up (25 nodes, 100 messages/sec), the `message-per-op` value grew to 75.6. Not particularly impressive, but the test run showed that the broadcast protocol is in fact functional.
 
 
 ### Partition Tolerance {#partition-tolerance}
 
-There could be all kinds of nemesis a distributed system may encounter, and _network partition_ is definitely one of them. A network partition[^fn:1] happens when the operational nodes are divided into networks of two or more fully-connected components (cliques), and communication between those components are disabled.
+<a id="figure--dist2"></a>
+
+{{< figure src="/images/dist2.jpeg" caption="<span class=\"figure-number\">Figure 2: </span>Broadcasting in the presence of a network partition" >}}
+
+There could be all kinds of nemesis a distributed system may encounter, and _network partition_ is definitely one of them. A **network partition**[^fn:1] happens when the operational nodes are divided into networks of two or more fully-connected components (cliques), and communication between those components are disabled. The previously designed system will be unable to survive this failure, as it only relays messages to its neighbors once. If the neighbor was partitioned during the arrival of a new message, it won't ever be sent again, breaking consistency between different nodes across the partition.
+
+How could we build a system that is [eventually consistent](https://en.wikipedia.org/wiki/Eventual_consistency) in the presence of such failures? There may be different ways to address this issue, but retries could be a solution. Instead of mindlessly throwing values at one's neighbors upon the receipt of a new message, it could expect an acknowledgement from each neighbor to make sure that it received the value. That way, the nodes will keep trying to reach the neighbors on the other side of the partition, and ultimately to sync up on the values when the partition heals.
 
 
-### Efficiency Metrics {#efficiency-metrics}
+#### Implementation in Go {#implementation-in-go}
 
-Maelstrom, the underlying testbench for the challenge, provided a lot of metrics and charts that could be used to analyze the performance of my algorithm. Here are some of the key metrics:
+For each incoming message, the `broadcast` message handler now made use of the `RPC()` call, which comes with its own handler to process the ACK message returned by its neighbor. When a broadcast request for a new value arrives, a node will do the following:
 
--   **Stable latency** is a measure of time elapsed for a message to be propagated to all nodes (i.e., visible in the output of `read` operation on every nodes). The latency is displayed in percentiles. For example, a `stable-latencies` field with `{0 0, 0.5 100, 0.95 200, 0.99 300, 1 400}` would indicate a median latency of 100ms, and a maximum of 400ms.
--
+-   Create a map of neighbors (`waiting`) to relay the broadcast and expect an ACK from
+-   Retry the relay RPC (only for those that haven't returned an ACK yet) until all recipients sends back an ACK
 
+Although the logic wasn't that complicated, it was tricky to evade the concurrent read/write issue for the `waiting` map, especially since it had to iterate over each key/values. I could've dealed with this issue by placing mutex locks, but decided to check out the `sync.Map` provided by Go, which seems to be recommended for a limited use case (stated below) over the traditional Go Map paired with mutexes:
 
-### Optimization #1: Reshaping the Network {#optimization-1-reshaping-the-network}
+-   When the entry for a given key is only ever written once but read many times, as in caches that only grow
+-   When multiple goroutines read, write, and overwrite entries for disjoint sets of keys.
 
-Closely reviewing the problem description, I saw that I could ignore the `topology` message and define my own network.
+Since my use case perfectly fit the first one, I decided to track the ACK message receipt progress with it, as in the code snippet below:
 
+```go
+// Excerpt from the broadcast handler logic
+db.Put(message, nil)
+waiting := sync.Map{} // map[string]bool (neighbor addr: is ACK arrived)
+for _, neighbor := range neighbors {
+    if neighbor == msg.Src {
+        continue // Exclude sender from message relay recipient
+    }
+    waiting.Store(neighbor, false)
+}
+pending := true
+var err error
+for pending {
+    pending = false
+    waiting.Range(func(neighbor, value any) bool {
+        if v, _ := waiting.Load(neighbor); v.(bool) {
+            return true
+        }
+        pending = true
+		// Does not block (asynchronous call)
+        err = n.RPC(neighbor.(string), body, func(msg maelstrom.Message) error {
+            waiting.Store(neighbor, true)
+            return nil
+        })
+        return err == nil
+    })
+    time.Sleep(time.Millisecond * 500)
+}
+if err != nil { return err }
 
-### Optimization #2: Periodic Gossip {#optimization-2-periodic-gossip}
-
-For the last section, the bar for efficiency got even higher, with `message-per-op` less than 20. However, there was a trade-off in latency, as the bar for the median and maximum latency was now one and two seconds, respectively.
-
-```edn
-:net {:all {:send-count 9718,
-            :recv-count 9715,
-            :msg-count 9718,
-            :msgs-per-op 5.037843},
-    :clients {:send-count 3958, :recv-count 3958, :msg-count 3958},
-    :servers {:send-count 5760,
-                :recv-count 5757,
-                :msg-count 5760,
-                :msgs-per-op 2.9860032},
-    :valid? true},
-
-:stable-latencies {0 0, 0.5 895, 0.95 1001, 0.99 1099, 1 1129},
+// ...omitted
 ```
+
+After making the change above, the system was able to synchronize itself after the healing of a network partition. It still wasn't an efficient system overall (55 `message-per-op` , median/maximum latency of 460, 793ms), but that wasn't the ultimate objective for this part.
+
+On my next post, I'll go through how I made the system to become more competent!
 
 [^fn:1]: Adopted from P.Bernstein, N.Goodman and V.HAdzilakos, _Distributed Recovery_
