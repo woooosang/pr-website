@@ -25,38 +25,51 @@ func generateID(nodeId string) string {
 }
 ```
 
-There weren't any complicated logic; in fact, the snippet above was pretty much the gist of it.
+There wasn't any complicated logic; in fact, the snippet above was pretty much the gist of it.
 
 
 ## Part 3: Broadcast {#part-3-broadcast}
 
-Things began to ramp up from this section, as now the problems required communication between internal nodes, whereas the previous problems only required exclusive communication between the clients.
+Things began to ramp up from this section, as now the problems required communication between internal nodes, unlike the previous problems which only required exclusive communication between the clients. (Protocol specification available [here](https://fly.io/dist-sys/3a/))
 
 
 ### Naive Broadcast {#naive-broadcast}
 
-Here
+<a id="figure--dist1"></a>
+
+{{< figure src="/images/dist1.jpeg" caption="<span class=\"figure-number\">Figure 1: </span>Client sends a request to broadcast \"3\"" >}}
+
+The simplest way (aka the bare minimum) to broadcast a message as a node in a distributed system would be to relay the message to its neighbors **whenever a new message is received**. The diagram above shows that case: client 1 sends a request to broadcast 3, and node 1, as the initial recipient of tha message, will relay 3 to its neighbors. One thing to be careful when forwarding the message here would be to refrain from sending back the same message to its sender, since that would cause an infinite loop - `n1` sends 3 to `n2`, `n2` relays it to `n3`, `n3` to `n1` and so on.
+
+Of course, this approach is not efficient at all. Even for a simple network as in the diagram above, we can see that `n2` and `n3` are receiving duplicate messages. For more complex networks with higher throughput, this will be a major deal breaker. It's also prone to network failures and site failures, since it is built upon the assumption that the system is fault-free.
+
+
+#### Implementing in Go {#implementing-in-go}
+
+The idea for this stage was pretty simple, but there were some issues worth considering in the implementation process.
 
 
 ### Partition Tolerance {#partition-tolerance}
 
-There could be myriads of different reasons a distributed system may fail, and _network partition_ is definitely one of them.
+There could be all kinds of nemesis a distributed system may encounter, and _network partition_ is definitely one of them. A network partition[^fn:1] happens when the operational nodes are divided into networks of two or more fully-connected components (cliques), and communication between those components are disabled.
 
 
 ### Efficiency Metrics {#efficiency-metrics}
 
-Maelstrom, the underlying testbench for the challenge, provided a lot of metrics and charts that I could refer to on analyzing the performance of my algorithm.
+Maelstrom, the underlying testbench for the challenge, provided a lot of metrics and charts that could be used to analyze the performance of my algorithm. Here are some of the key metrics:
 
-
-#### Stable Latency {#stable-latency}
+-   **Stable latency** is a measure of time elapsed for a message to be propagated to all nodes (i.e., visible in the output of `read` operation on every nodes). The latency is displayed in percentiles. For example, a `stable-latencies` field with `{0 0, 0.5 100, 0.95 200, 0.99 300, 1 400}` would indicate a median latency of 100ms, and a maximum of 400ms.
+-
 
 
 ### Optimization #1: Reshaping the Network {#optimization-1-reshaping-the-network}
 
-Closely reviewing the problem description, I saw that I could ignore the `topology` message and create my own.
+Closely reviewing the problem description, I saw that I could ignore the `topology` message and define my own network.
 
 
-### Optimization #2: Gossip {#optimization-2-gossip}
+### Optimization #2: Periodic Gossip {#optimization-2-periodic-gossip}
+
+For the last section, the bar for efficiency got even higher, with `message-per-op` less than 20. However, there was a trade-off in latency, as the bar for the median and maximum latency was now one and two seconds, respectively.
 
 ```edn
 :net {:all {:send-count 9718,
@@ -69,4 +82,8 @@ Closely reviewing the problem description, I saw that I could ignore the `topolo
                 :msg-count 5760,
                 :msgs-per-op 2.9860032},
     :valid? true},
+
+:stable-latencies {0 0, 0.5 895, 0.95 1001, 0.99 1099, 1 1129},
 ```
+
+[^fn:1]: Adopted from P.Bernstein, N.Goodman and V.HAdzilakos, _Distributed Recovery_
