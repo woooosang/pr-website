@@ -361,3 +361,14 @@ For the last section, the bar for efficiency got even higher, with ~message-per-
 
 :stable-latencies {0 0, 0.5 895, 0.95 1001, 0.99 1099, 1 1129},
 #+end_src
+
+** TODO Fly.io Distributed System Challenege with Go (Part 3) :dev:go:@systems:
+:PROPERTIES:
+:EXPORT_FILE_NAME: fly-dot-io-distributed-system-challenege-with-go-part-3
+:END:
+
+*** Topics to Cover
++ Completing challenge part 4
++ Sequential Consistency
+  - Zookeeper: $OSC(U)$: Ordered sequential consistency on updates
+  - Maelstrom's ~seq-kv~ service traits
