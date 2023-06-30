@@ -1,9 +1,10 @@
 +++
 title = "Fly.io Distributed System Challenge with Go (Part 2)"
 author = ["Woosang Kang"]
+date = 2023-06-29T23:59:00-04:00
 tags = ["dev", "go"]
 categories = ["systems"]
-draft = true
+draft = false
 +++
 
 In my previous post, I covered how I built a basic partition-tolerant broadcast system. While it did manage to perform correctly, it was not exactly performant. There was plenty of room for performance optimizations that could be done - this post covers them.
@@ -88,7 +89,9 @@ So _periodic gossip_, a family of the [gossip protocol](https://en.wikipedia.org
 
 <a id="figure--dist5"></a>
 
-{{< figure src="/images/dist5.jpeg" caption="<span class=\"figure-number\">Figure 3: </span>Spanning tree construction with 5 nodes, max 2 children/node" >}}
+{{< figure src="/images/dist5.jpeg" caption="<span class=\"figure-number\">Figure 3: </span>Gossip protocol between three nodes (persp. of `n1`)" >}}
+
+The neighbor that receives the message can then send an `ACK` of the messages back to the node, which will update its 'who knows what' database. Here's an implementation of what I just said in Go:
 
 ```go
 // 'Set' of values that this node knows (the `any` is a placeholder)

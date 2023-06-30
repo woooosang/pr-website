@@ -333,7 +333,8 @@ On my next post, I'll go through how I made the system to become more competent!
 *** Footnotes
 [fn:1] Adopted from P.Bernstein, N.Goodman and V.HAdzilakos, /Distributed Recovery/
 
-** TODO Fly.io Distributed System Challenge with Go (Part 2) :dev:go:@systems:
+** DONE Fly.io Distributed System Challenge with Go (Part 2) :dev:go:@systems:
+CLOSED: [2023-06-29 Thu 23:59]
 :PROPERTIES:
 :EXPORT_FILE_NAME: fly-dot-io-distributed-system-challenge-with-go-part-2
 :END:
@@ -404,8 +405,10 @@ Alright, will that save us a bunch of messages? Well...not yet. This method of n
 So /periodic gossip/, a family of the [[https://en.wikipedia.org/wiki/Gossip_protocol][gossip protocol]], will be an effective strategy here. In order to make this happen, the nodes would need a separate database of *who knows what* for each of its neighbor (~acked~ in the snippet below). And then, periodically, each node would gossip to its neighbors a customized set of messages that is presumed to be new to them.
 
 #+name: fig__dist5
-#+caption: Spanning tree construction with 5 nodes, max 2 children/node
+#+caption: Gossip protocol between three nodes (persp. of =n1=)
 [[/images/dist5.jpeg]]
+
+The neighbor that receives the message can then send an =ACK= of the messages back to the node, which will update its 'who knows what' database. Here's an implementation of what I just said in Go:
 
 #+begin_src go
 // 'Set' of values that this node knows (the `any` is a placeholder)
