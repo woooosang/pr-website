@@ -490,8 +490,19 @@ That concludes the long journey to implementing a performant, partition-tolerant
 :EXPORT_FILE_NAME: fly-dot-io-distributed-system-challenege-with-go-part-3
 :END:
 
+ Time flies for sure -
 *** Topics to Cover
 + Completing challenge part 4
 + Sequential Consistency
   - Zookeeper: $OSC(U)$: Ordered sequential consistency on updates
   - Maelstrom's ~seq-kv~ service traits
+
+** TODO Different Types of Build Systems :dev:bazel:@devops:
+:PROPERTIES:
+:EXPORT_FILE_NAME: different-types-of-build-systems
+:END:
+
+Recently, I was working on a project at work that involved the implementation of a build system in Bazel for a large NodeJS application.
+*** Task-Based Build Systems
+*** Artifact-Based Build Systems
+*** On Sustainability
