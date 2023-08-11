@@ -6,7 +6,7 @@ categories = ["devops"]
 draft = true
 +++
 
-Recently, I was working on a project at work that involved the implementation of a build system in Bazel for a large NodeJS application.
+Recently, I was working on a project of implementing a build system in Bazel for a large NodeJS application.
 
 
 ## Task-Based Build Systems {#task-based-build-systems}
