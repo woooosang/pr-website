@@ -7,7 +7,7 @@ categories = ["code"]
 draft = false
 +++
 
-In my small project of implementing a [minimal DNS lookup utilitly in Go](https://github.com/paul-kang-1/dns-go), I was trying to come up with a simplified logic of parsing the query response into a `DNSPacket` struct, which had the following structure:
+In my small project of implementing a [minimal DNS lookup utility in Go](https://github.com/paul-kang-1/dns-go), I was trying to come up with a simplified logic of parsing the query response into a `DNSPacket` struct, which had the following structure:
 
 ```go
 type DNSPacket struct {

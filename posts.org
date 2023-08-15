@@ -514,7 +514,7 @@ CLOSED: [2023-08-15 Tue 16:52]
 :EXPORT_FILE_NAME: generics-in-go-type-inference-based-on-parameter-constraints
 :END:
 
-In my small project of implementing a [[https://github.com/paul-kang-1/dns-go][minimal DNS lookup utilitly in Go]], I was trying to come up with a simplified logic of parsing the query response into a ~DNSPacket~ struct, which had the following structure:
+In my small project of implementing a [[https://github.com/paul-kang-1/dns-go][minimal DNS lookup utility in Go]], I was trying to come up with a simplified logic of parsing the query response into a ~DNSPacket~ struct, which had the following structure:
 #+begin_src go
 type DNSPacket struct {
     Header      *DNSHeader
