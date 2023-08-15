@@ -15,4 +15,4 @@ Recently, I was working on a project of implementing a build system in Bazel for
 ## Artifact-Based Build Systems {#artifact-based-build-systems}
 
 
-## On Sustainability {#on-sustainability}
+## Long-Term Prospects {#long-term-prospects}

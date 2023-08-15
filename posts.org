@@ -13,7 +13,7 @@ CLOSED: [2022-11-14 Mon 23:58]
 
 [[/images/about-photo.png]]
 
-Hi, I'm Woosang, currently a CS undergraduate at a college in Upstate New York. My interest lies on creating resilient backend services (especially for Go), building foolproof measures for development procedures (e.g. CI pipelines), and tweaking Emacs configs.
+Hi, I'm Woosang, currently a CS undergraduate at a college in Upstate New York. My interest lies on creating resilient backend services (especially for Go) and implementing build systems.
 
 On my spare time, I like to [[https://youtu.be/qyQLNk6QoJk][make music]], hike mountains and chill with my cats.
 
@@ -505,4 +505,93 @@ That concludes the long journey to implementing a performant, partition-tolerant
 Recently, I was working on a project of implementing a build system in Bazel for a large NodeJS application.
 *** Task-Based Build Systems
 *** Artifact-Based Build Systems
-*** On Sustainability
+*** Long-Term Prospects
+dodo
+
+** DONE Generics in Go: Type Inference Based on Parameter Constraints :dev:go:@code:
+CLOSED: [2023-08-15 Tue 16:52]
+:PROPERTIES:
+:EXPORT_FILE_NAME: generics-in-go-type-inference-based-on-parameter-constraints
+:END:
+
+In my small project of implementing a [[https://github.com/paul-kang-1/dns-go][minimal DNS lookup utilitly in Go]], I was trying to come up with a simplified logic of parsing the query response into a ~DNSPacket~ struct, which had the following structure:
+#+begin_src go
+type DNSPacket struct {
+    Header      *DNSHeader
+    Questions   *[]DNSQuestion
+    Answers     *[]DNSRecord
+    Authorities *[]DNSRecord
+    Additionals *[]DNSRecord
+}
+
+// initialize from Reader
+func (dr *DNSQuestion) FromBytes(reader *bytes.Reader) error { //... }
+func (dr *DNSRecord) FromBytes(reader *bytes.Reader) error { //... }
+#+end_src
+See how most of the fields are pointers to a slice? Since all instances of ~DNS-~ type were created by a pointer receiver function, I wanted to create an interface that covered those types, and then define a generic function ~parseSlice~ that would construct a slice of the given type, given a ~*bytes.Reader~ to digest data from. That way, I won't have to write duplicate logic for different ~DNS~ types:
+#+begin_src go
+type DNS interface {
+	FromBytes(reader *bytes.Reader) error
+}
+
+func parseSlice[T DNS](size int, reader *bytes.Reader) ([]T, error) {
+	slice := make([]T, size)
+	for i := 0; i < size; i++ {
+		if err := slice[i].FromBytes(reader) {
+            return nil, err
+		}
+	}
+	return nil
+}
+#+end_src
+*** Naive approaches
+Now, would it be possible to create a slice of any ~DNS~ implementation as in: ~parseSlice[DNSRecord](4, reader)~? Not really - passing ~DNSRecord~ directly as a parameter type, we are saying that it implements the ~DNS~ interface. However, ~DNSRecord~ does not have a ~FromBytes~ method (it's ~*DNSRecord~ that has it) making it uncompilable.
+
+On the other hand, passing the pointer type instead to the type parameter (~parseSlice[*DNSRecord](4, reader)~) and making the return type to be ~[]*DNSRecord~ would make the code compile, but lead to a panic in runtime: the local ~slice~ of type ~[]*DNSRecord~ is initialized to a series of ~nil~, and calling ~FromBytes~ will cause a ~nil~ dereference error. So neither solution works.
+
+How can we achieve such duality? The answer lies on /type constraints/.
+
+*** Type constraints
+While method signatures and embedded interface types are common in interface definitions, the proposal adds three new entities inside interfaces:
+
+An *arbitrary type constraint element* allows any types to be present, not only interface types. This makes expressions such as ~type Num interface {int}~ possible. However, a type parameter cannot be used plainly inside a definition.
+
+*Approximation constraint element* indicate (~~T~) the set of types that has an underlying type of the given type. For example, ~type Stringy interface {~string}~ includes all type sets including ~string~ and those that have an internal representation of ~string~.
+
+*Union constraint element* allows the union of different type sets (e.g. ~int | int8 | int16~)
+
+Note that if any of these elements are present inside an interface definition, it /cannot/ be used as a variable type, but only as a type constraint! For the problem covered here, the first element would be the most relevant.
+
+**** Tip: type conversions
+For two type parameters ~From~ and ~To~, a value of type ~From~ can be converted to a value of type ~To~ if the type set of ~From~ /equals/ the type set of ~To~.
+
+*** Final solution
+Back to the problem! To reiterate our objective, we want the ~parseSlice~ function to take ~DNSRecord~ (or any other ~DNS~ interface implementations) as an argument but call its pointer method. The way to achieve this duality, as well described in this [[https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md#constraint-type-inference][proposal]], is to revise the interface and the type parameters of ~parseSlice~ to fulfill both requirements using type constraints.
+
+#+begin_src go
+type DNS[P any] interface {
+    FromBytes(reader *bytes.Reader) error
+    *P // non-interface type constraint
+}
+#+end_src
+Let's break down what this means - or the *type set* it represents. There are two requirements here: a) it should have a ~FromBytes~ method, and b) its type set is limited to the pointer type of the interface's type parameter. So for an instantiated interface of ~DNS[DNSRecord]~, its type set is constrained to type ~*DNSRecord~. In other words, the pointer type of ~P~ should have the method ~FromBytes~!
+
+Now we can pass in a non-pointer type as a parameter for ~parseSlice~, thereby evading the ~nil~ dereference issue caused by the ~slice~ variable being initialized as a slice of pointers.
+#+begin_src go
+func parseSlice[T any, PT DNS[T]](size int, reader *bytes.Reader) ([]T, error) {
+	slice := make([]T, size)
+	for i := 0; i < size; i++ {
+        // &slice[i] is type *T, which meets the type conversion criteria
+		// (equality of type set). This exposes the FromBytes() method
+		p := PT(&slice[i])
+		if err := p.FromBytes(reader); err != nil {
+			return nil, err
+		}
+	}
+	return slice, nil
+}
+#+end_src
+
+Finally, we can create a slice by calling ~parseSlice[DNSRecord](4,reader)~! Although there are two types required as a parameter for ~parseSlice~, Go is smart enough to infer the type of ~PT~ from ~T~ (type inference), so we don't have to pass in ~[DNSRecord, *DNSRecord]~.
+*** References
+- [[https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md#constraint-type-inference][Constraint Type Inference Proposal]]
