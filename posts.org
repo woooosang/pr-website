@@ -502,10 +502,6 @@ CLOSED: [2023-08-17 Thu 16:23]
 :PROPERTIES:
 :EXPORT_FILE_NAME: different-types-of-build-systems
 :END:
-#+BEGIN_QUOTE
-Dongdongi is cute.
-#+END_QUOTE
-
 
 Recently, I worked on implementing a build system in Bazel for a complex NodeJS application managed by Yarn. Although it seemed to be fairly simple in the beginning, it quickly spun off into a complex concern. While the superficial reason was due to the peculiar internal structure of the repository (e.g. symlink farms, local file deps, etc.) and the relative lack of support for NodeJS in Bazel, I realized that there was a fundamental issue in the integration - the gap in the objectives of two different build systems.
 
