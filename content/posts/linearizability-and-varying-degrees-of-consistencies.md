@@ -39,13 +39,11 @@ We could also add a real-time requirement to the consistency test regarding the 
 Unlike causal consistency, sequential consistency constrains the execution to be in some _total order_, and the resulting execution should be consistent with the order of operations on each individual nodes.
 
 
-## Linearizability {#linearizability}
+## More Topics to Cover {#more-topics-to-cover}
 
-
-## External Consistency (Gifford) {#external-consistency--gifford}
-
-
-## Serializability {#serializability}
+-   Linearizability
+-   External consistency (Gifford)
+-   Serializability
 
 
 ## Further Readings {#further-readings}

@@ -128,12 +128,10 @@ We could also add a real-time requirement to the consistency test regarding the 
 
 *** Sequential Consistency (Lamport)
 Unlike causal consistency, sequential consistency constrains the execution to be in some /total order/, and the resulting execution should be consistent with the order of operations on each individual nodes.
-
-*** Linearizability
-
-*** External Consistency (Gifford)
-
-*** Serializability
+*** More Topics to Cover
+- Linearizability
+- External consistency (Gifford)
+- Serializability
 
 *** Footnotes
 [fn:1] Adopted from [[https://www.cs.cornell.edu/lorenzo/papers/cac-tr.pdf][Consistency, Availability and Convergence (Marajan et al.)]]
