@@ -7,7 +7,7 @@ categories = ["devops"]
 draft = false
 +++
 
-Recently, I worked on implementing a build system in Bazel for a complex NodeJS application managed by Yarn. Although it seemed to be fairly simple in the beginning, it quickly spun off into a complex concern. While the superficial reason was due to the peculiar internal structure of the repository (e.g. symlink farms, local file deps, etc.) and the relative lack of support for NodeJS in Bazel, I realized that there was a fundamental issue in the integration - the gap in the objectives of two different build systems.
+Recently, I worked on implementing a build system in Bazel for a complex NodeJS application managed by Yarn. Although it seemed to be fairly simple in the beginning, it quickly spun off into a headache. While the superficial reason was due to the peculiar internal structure of the repository (e.g. symlink farms, local file deps, etc.) and the relative lack of support for NodeJS in Bazel, I realized that there was a fundamental issue in the integration - the gap in the objectives of two different build systems.
 
 > Also, [here](https://github.com/paul-kang-1/bazel-webpack-demo)'s my take on a demo e2e (dependency installation to bundling &amp; static file serving) process for a NodeJS/Webpack-configured repository using Bazel as a build tool. Check it out if you're interested!
 
